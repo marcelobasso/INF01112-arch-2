@@ -10,15 +10,16 @@
 #include <time.h>
 #include <iomanip>
 #include <sstream>
+#include <map>
 
-#define R1 100000 // number of rows in Matrix-1
-#define C1 1000 // number of columns in Matrix-1
-#define R2 1000 // number of rows in Matrix-2
-#define C2 100000 // number of columns in Matrix-2
+#define ROWS 1000 // number of rows in matrixes
+#define COLS 1000 // number of columns in matrixes
 
 using namespace std;
 
 // @brief populates and runs quicksort on array of size 10^magnitude
 // @param magritude: number of elements in array (power of 10)
-void sortRandArray(int magnitude);
-void stable_quicksort(vector<pair<int, unsigned long>>& c, int lo, int hi);
+void sort_rand_array(int magnitude);
+
+// @brief populates and multiplies matrixes of size 1^5 x 10^5
+void mult_rand_matrix(int rows, int cols);
