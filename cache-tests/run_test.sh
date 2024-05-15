@@ -1,3 +1,13 @@
+REQUIRED_INFO="instructions,
+               cycles,
+               mem_load_retired.l1_hit,
+               mem_load_retired.l1_miss,
+               mem_load_retired.l2_hit,
+               mem_load_retired.l2_miss,
+               mem_load_retired.l3_hit,
+               mem_load_retired.l3_miss,
+               cache-misses"
+
 if [ -z $1 ]; then
     echo "Pass an argument:"
     echo "  S - for array sorting"
@@ -13,16 +23,10 @@ if [ "$1" != "S" -a "$1" != "M" -a "$1" != "G" ]; then
     exit 1
 fi
 
-REQUIRED_INFO="instructions,
-               cycles,
-               mem_load_retired.l1_hit,
-               mem_load_retired.l1_miss,
-               mem_load_retired.l2_hit,
-               mem_load_retired.l2_miss,
-               mem_load_retired.l3_hit,
-               mem_load_retired.l3_miss"
+# compile code
+g++ src/utils.cpp main.cpp -o main
 
-
+# if verbose mode
 if [[ $* == *-v* ]]; then
     echo "Runing tests for option $1..."
     sudo perf stat -e ${REQUIRED_INFO//[$'\t\r\n ']} ./main $1
