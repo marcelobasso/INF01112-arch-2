@@ -1,6 +1,5 @@
-#ifndef CONSTANST
-#define CONSTANTS 1
-#include "src/constants.h"
+#ifndef UTILS
+#define UTILS 1
 #include "src/utils.h"
 #endif
 
@@ -35,6 +34,7 @@ void sort_rand_array(int magnitude) {
     char c;
 
     // populates vector with 10^magnitude entries
+    cout << "Populating vector with size 10^" << magnitude << endl;
     for (int i = 0; i < pow(10, magnitude); i++) {    
         n = get_random_number(0, pow(10, magnitude));
         c = char(n);
@@ -46,24 +46,13 @@ void sort_rand_array(int magnitude) {
     }
 
     // runs quicksort on vector
+    cout << "Running stable quicksort on vector...";
     stable_quicksort(v, 0, pow(10, magnitude));
 }
 
 // -----------------------------------------------------------------------
 // Algoritmo de multiplicacao de matrizes
 // -----------------------------------------------------------------------
-
-void print_mat(vector<vector<int>> &mat, int rows, int cols) {
-    cout << "\nPrinting matrix:\n";
-    
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++)
-            cout << mat[i][j] << "\t";
-
-        cout << endl;
-    }
-    cout << '\n';
-}
 
 void mult_mat(vector<vector<int>> &mat1, vector<vector<int>> &mat2, int rows, int cols) {
     vector<vector<int>> rslt(rows, vector<int>(cols));
@@ -86,6 +75,7 @@ void mult_rand_matrix(int rows, int cols) {
     srand(time(NULL));
 
     // populates matrixes
+    cout << "Populating matrix if size " << rows << " x " << cols << endl;
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
             mat1[i][j] = get_random_number(0, cols);
@@ -93,6 +83,7 @@ void mult_rand_matrix(int rows, int cols) {
         }
     }
 
+    cout << "Running matrix multiplication...";
     mult_mat(mat1, mat2, rows, cols);
 }
 
@@ -101,54 +92,58 @@ void mult_rand_matrix(int rows, int cols) {
 // Algoritmo de caminhamento em grafo
 // -----------------------------------------------------------------------
 
-typedef struct node {
-    string name;
-    vector<struct node*> edges;
-} Node;
+Node* populateGraph(Node *n, int level) {
+    if (level > 0) {
+        n = new Node();
+        n->name = gen_random(12);
+        n->dir = populateGraph(n->dir, level - 1);
+        n->esq = populateGraph(n->esq, level - 1);
+    }
 
-// adds an edge
-void addEdge(Node *n, string name) {
-    Node *edge = (Node *) malloc(sizeof(Node));
-
-    edge->name = name;
-    n->edges.push_back(edge);
+    return n;
 }
 
-// // runs dfs
-// void DFS(Node *v) {
-//     map<string, bool> visited;
-//     map<string, vector<Node *>> adj;
+// runs dfs
+void DFS(Node *v) {
+    string name = v->name;
+    if (v->esq != nullptr) DFS(v->esq);
+    if (v->dir != nullptr) DFS(v->dir);
+}
 
-//     visited[v->name] = true;
-//     cout << v->name << " ";
- 
-//     // Recur for all the vertices adjacent
-//     // to this vertex
-//     vector<string>::iterator i;
-//     for (i = adj[v->name].begin(); i != adj[v->name].end(); ++i)
-//         if (!visited[*i])
-//             DFS(*i);
-
-// }
+// -----------------------------------------------------------------------
+// funcao main
+// -----------------------------------------------------------------------
 
 int main(int argc, char **argv) {
+    Node *root = NULL;
+    int param = stoi(argv[2]);
+
     if (argc == 1) {
         cout << "Pass an argument\nS - for array sorting\nM - for matrix multiplication\nG - for DFS on graph\n";
         return 1;
     }
+    srand((unsigned)time(NULL) * getpid());
 
     switch (*argv[1]) {
         case 'S':
-            sort_rand_array(6);
+            sort_rand_array(param);
             break;
         
         case 'M':
-            mult_rand_matrix(ROWS, COLS);
+            mult_rand_matrix(param, param);
+            break;
+
+        case 'G':
+            cout << "Populating full tree of height " << param << endl;
+            root = populateGraph(nullptr, param);
+            cout << "Running DFS on graph..." << endl;
+            DFS(root);
             break;
 
         default:
             cout << "ERROR: argument passed is not an option\n";
     }
 
+    cout << endl;
     return 0;
 }

@@ -10,12 +10,16 @@
 #include <time.h>
 #include <iomanip>
 #include <sstream>
-#include <map>
-
-#define ROWS 1000 // number of rows in matrixes
-#define COLS 1000 // number of columns in matrixes
+#include <ctime>
+#include <unistd.h>
+#include <stack>
 
 using namespace std;
+
+typedef struct node {
+    string name;
+    node *dir, *esq;
+} Node;
 
 // @brief populates and runs quicksort on array of size 10^magnitude
 // @param magritude: number of elements in array (power of 10)

@@ -13,8 +13,11 @@ if [ -z $1 ]; then
     echo "  S - for array sorting"
     echo "  M - for matrix multiplication"
     echo "  G - for DFS on graph"
-    echo "Flags:"
-    echo "  -v - verbose to see cache info"
+    exit 1
+fi
+
+if [ -z $2 ]; then
+    echo "Pass a size according to the algorithm ur executing"
     exit 1
 fi
 
@@ -23,14 +26,11 @@ if [ "$1" != "S" -a "$1" != "M" -a "$1" != "G" ]; then
     exit 1
 fi
 
-# compile code
+echo "Compilling code..."
 g++ src/utils.cpp main.cpp -o main
 
 # if verbose mode
-if [[ $* == *-v* ]]; then
-    echo "Runing tests for option $1..."
-    sudo perf stat -e ${REQUIRED_INFO//[$'\t\r\n ']} ./main $1
-else
-    ./main $1
-fi
+echo "Runing tests for option $1..."
+sudo perf stat -e ${REQUIRED_INFO//[$'\t\r\n ']} ./main $1 $2
+
 
