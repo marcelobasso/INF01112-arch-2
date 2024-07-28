@@ -27,8 +27,11 @@ instructions,cycles,llc misses.data read,llc misses.mem write
    mem_load_retired.l2_miss,mem_load_retired.l3_hit,mem_load_retired.l3_miss
    cache_misses
    cache_references
-4. ?
-5. ?
+4. ? 
+5. ? (use perf mem)
 
-#$ perf mem report -a ./main <OPTION> <SIZE>
-#$ perf stat -e <PARAMS> ./main <OPTION> <SIZE>
+~$ sudo perf mem record -a ./main <OPTION> <SIZE>
+~$ sudo perf mem report
+~$ perf mem -t load report --sort=mem
+
+~$ perf stat -e <PARAMS> ./main <OPTION> <SIZE>
