@@ -58,3 +58,4 @@ void print_mat(vector<vector<int>> &mat, int rows, int cols) {
     }
     cout << '\n';
 }
+

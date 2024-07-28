@@ -1,12 +1,16 @@
 REQUIRED_INFO="instructions,
                cycles,
+               cache-references,
+               cache-misses,
                mem_load_retired.l1_hit,
                mem_load_retired.l1_miss,
                mem_load_retired.l2_hit,
                mem_load_retired.l2_miss,
                mem_load_retired.l3_hit,
                mem_load_retired.l3_miss,
-               cache-misses"
+               mem-loads,
+               mem-stores"
+
 
 if [ -z $1 ]; then
     echo "Pass an argument:"
