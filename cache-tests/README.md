@@ -65,3 +65,9 @@ Size: 6144K
 Number of Sets: 8192
 Ways of Associativity: 12
 Coherence line-size: 64
+
+sudo perf stat -e L1-dcache-load-misses,L1-dcache-loads,L2-load-misses ./main
+sudo perf stat -e L2-loads,LLC-load-misses,LLC-loads ./main
+
+sudo perf stat -e cycles,instructions,cache-misses,cache-references ./main
+sudo perf stat -e dTLB-load-misses,dTLB-store-misses,dTLB-stores ./main

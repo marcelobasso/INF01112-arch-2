@@ -8,15 +8,15 @@
 // -----------------------------------------------------------------------
 
 // 3 way partitioning quicksort: duplicate keys remain stable
-void stable_quicksort(vector<pair<int, unsigned long>>& c, int lo, int hi) {
-    pair<int, unsigned long> v = c[lo];
+void stable_quicksort(vector<int>& c, int lo, int hi) {
+    int v = c[lo];
     int lt = lo, i = lo + 1, gt = hi;
 
     if (lo < hi) {
         while (i <= gt) {
-            if (c[i].first < v.first)
+            if (c[i] < v)
                 swap_quick(c, lt++, i++);
-            else if (c[i].first > v.first)
+            else if (c[i] > v)
                 swap_quick(c, i, gt--);
             else i++;
         }
@@ -29,20 +29,14 @@ void stable_quicksort(vector<pair<int, unsigned long>>& c, int lo, int hi) {
 // @param magnitude: number of elements in array (power of 10)
 void sort_rand_array(int magnitude) {
     srand(time(NULL));
-    vector<pair<int, unsigned long>> v;
+    vector<int> v;
     int n;
-    char c;
 
     // populates vector with 10^magnitude entries
     cout << "Populating vector with size 10^" << magnitude << endl;
     for (int i = 0; i < pow(10, magnitude); i++) {    
         n = get_random_number(0, pow(10, magnitude));
-        c = char(n);
-
-        // Convert the hash value to a string using std::to_string
-        unsigned long hashString = hash_33(&c);
-
-        v.push_back(pair<int, unsigned long>(n, hashString));
+        v.push_back(n);
     }
 
     // runs quicksort on vector
@@ -117,6 +111,8 @@ void DFS(Node *v) {
 int main(int argc, char **argv) {
     Node *root = NULL;
     int param = stoi(argv[2]);
+
+    cout << "Int size: " << sizeof(int) << endl;
 
     if (argc == 1) {
         cout << "Pass an argument\nS - for array sorting\nM - for matrix multiplication\nG - for DFS on graph\n";
