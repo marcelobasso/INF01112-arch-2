@@ -89,7 +89,7 @@ void mult_rand_matrix(int rows, int cols) {
 Node* populateGraph(Node *n, int level) {
     if (level > 0) {
         n = new Node();
-        n->name = gen_random(12);
+        n->name = gen_random(10);
         n->dir = populateGraph(n->dir, level - 1);
         n->esq = populateGraph(n->esq, level - 1);
     }
