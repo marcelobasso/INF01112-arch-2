@@ -29,7 +29,7 @@ void stable_quicksort(vector<int>& c, int lo, int hi) {
 // @param magnitude: number of elements in array (power of 10)
 void sort_rand_array(int magnitude) {
     srand(time(NULL));
-    vector<int> v;
+    vector<int> v(pow(10, magnitude));
     int n;
 
     // populates vector with 10^magnitude entries
