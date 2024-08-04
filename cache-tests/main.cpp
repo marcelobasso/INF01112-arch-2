@@ -113,6 +113,7 @@ int main(int argc, char **argv) {
     int param = stoi(argv[2]);
 
     cout << "Int size: " << sizeof(int) << endl;
+    cout << "Node size: " << sizeof(Node) << endl;
 
     if (argc == 1) {
         cout << "Pass an argument\nS - for array sorting\nM - for matrix multiplication\nG - for DFS on graph\n";
